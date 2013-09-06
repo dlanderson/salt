@@ -76,6 +76,7 @@ class SaltStreamDaemon(parsers.SaltCallOptionParser):
             stream_proc = multiprocessing.Process(target=stream_mod.run)
             stream_proc.start()
             active_streams.append(stream_proc)
+        # TODO: clean up saltstream daemons on shutdown
 
 class SaltStreamClient(parsers.SaltCallOptionParser):
     '''

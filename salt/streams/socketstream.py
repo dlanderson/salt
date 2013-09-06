@@ -107,12 +107,7 @@ class SocketStream(salt.streams.SaltStream):
             { address: '', type: '', port: '', opts: {} }
         '''
         valid_sockets = []
-        address_matcher = re.compile(r"^(?P<type>tcp|udp|unix)"
-                            r"(" # start of options grouping
-                            r"(,buffer=(?P<buffer>\d+))?"
-                            r"(,backlog=(?P<backlog>\d+))?"
-                            r")?" # end of options grouping
-                            r"://"
+        address_matcher = re.compile(r"^(?P<type>tcp|udp|unix)://"
                             r"(\[)?(?P<address>.*?)(\])?"
                             r"(:(?P<port>\d+))?$"
                         )
@@ -172,6 +167,7 @@ class SocketStream(salt.streams.SaltStream):
 
         while True:
             time.sleep(1)
+        # TODO: clean up threads properly on shutdown
 
 class SocketStreamClient(object):
     def __init__(self, opts, stream_config):
