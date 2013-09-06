@@ -116,3 +116,30 @@ def salt_main():
         client.run()
     except KeyboardInterrupt:
         raise SystemExit('\nExiting gracefully on Ctrl-c')
+
+
+def salt_stream():
+    '''
+    Create a SaltStreamDaemon and call run()
+    '''
+    import salt.stream
+    if '' in sys.path:
+        sys.path.remove('')
+    try:
+        stream_daemon = salt.stream.SaltStreamDaemon()
+        stream_daemon.start()
+    except KeyboardInterrupt:
+        raise SystemExit('\nExiting gracefully on Ctrl-c')
+
+def salt_stream_client():
+    '''
+    Create a SaltStreamClient pipe to a SaltStream IO Module
+    '''
+    import salt.stream
+    if '' in sys.path:
+        sys.path.remove('')
+    try:
+        stream_client = salt.stream.SaltStreamClient()
+        stream_client.run()
+    except KeyboardInterrupt:
+        raise SystemExit('\nExiting gracefully on Ctrl-c')

@@ -197,6 +197,15 @@ def roster(opts, whitelist=None):
     return ret
 
 
+def streams(opts, whitelist=None):
+    '''
+    Returns the stream modules
+    '''
+    load = _create_loader(opts, 'streams', 'stream')
+    ret = load.gen_functions(whitelist=whitelist)
+    return ret
+
+
 def states(opts, functions, whitelist=None):
     '''
     Returns the state modules
