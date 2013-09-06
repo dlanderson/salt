@@ -1,3 +1,37 @@
+'''
+Module that listens on TCP/UDP/UNIX sockets
+
+Example minion config:
+
+    streams:
+      socketstream_cmd_run:
+        type: socketstream.SocketStream
+        fun:
+            name: cmd.run
+            arg:
+              - 'ls -l /tmp'
+        sockets:
+            - defaults:
+                max_message_size: 1024
+                backlog: 5
+            - unix:///tmp/saltstream.cmd
+            - tcp://0.0.0.0:5678:
+                buffer_size: 4096
+                backlog: 4
+      socketstream_fire_event:
+        type: socketstream.SocketStream
+        fun:
+            name: event.fire_master
+            arg:
+              - 'something to be fired'
+              - 'tag'
+        sockets:
+            - defaults:
+                max_message_size: 1024
+                backlog: 5
+            - unix:///tmp/saltstream.event
+'''
+
 # Import python libs
 import os
 import sys
