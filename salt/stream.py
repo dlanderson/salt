@@ -1,3 +1,25 @@
+'''
+SaltStreams are long-running daemon modules that have a pre-loaded
+SMinion object for accessing Minion functions.
+
+A SaltStream module should inherit the salt.streams.SaltStream class,
+and should:
+    - Accept two arguments to __init__:
+        - The parsed minion configuration file as a dict
+        - The parsed stream configuration for the module as a dict
+    - Define a run() function which will be invoked by the SaltStream
+        daemon spawner through multiprocessing.Process.
+
+The SaltStream module can access the SMinion as self.minion.
+
+For example, A SaltStream module might do something like:
+    - Watch for udev events
+    - Watch for upstart dbus events
+    - Provide a syslog interface
+    - Watch interesting files/directories
+
+See salt.streams.SocketStream for a generic socket listener example.
+'''
 # Import python libs
 import os
 import sys
