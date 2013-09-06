@@ -42,9 +42,9 @@ from salt.exceptions import (
 )
 
 
-class SaltStreamDaemon(parsers.SaltCallOptionParser):
+class SaltStreamDaemon(parsers.SaltStreamOptionParser):
     '''
-    Deamon that handles loading and spwaning SaltStream IO modules
+    Deamon that handles loading and spawning SaltStream IO modules
     '''
     def prepare(self):
         self.parse_args()
@@ -66,11 +66,6 @@ class SaltStreamDaemon(parsers.SaltCallOptionParser):
                     [self.config['log_file']],
                     self.config['user']
                 )
-
-        if self.options.local:
-            self.config['file_client'] = 'local'
-        if self.options.master:
-            self.config['master'] = self.options.master
 
         self.setup_logfile_logger()
         enable_sigusr1_handler()

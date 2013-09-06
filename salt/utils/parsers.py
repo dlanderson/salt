@@ -1529,3 +1529,28 @@ class SaltSSHOptionParser(OptionParser, ConfigDirMixIn, MergeConfigMixIn,
 
     def setup_config(self):
         return config.master_config(self.get_config_file_path())
+
+class SaltStreamOptionParser(OptionParser, ConfigDirMixIn, MergeConfigMixIn,
+                          LogLevelMixIn):
+    __metaclass__ = OptionParserMeta
+
+    usage = '%prog [options]'
+    description = ('Salt stream starts the SaltStream daemon and '
+                    'spawns the configured SaltStream modules.')
+
+    usage = '%prog [options]'
+
+    # ConfigDirMixIn config filename attribute
+    _config_filename_ = 'minion'
+
+    # LogLevelMixIn attributes
+    _default_logging_level_ = 'warning'
+    _default_logging_logfile_ = os.path.join(syspaths.LOGS_DIR, 'streams')
+    _loglevel_config_setting_name_ = 'cli_salt_streams_log_file'
+
+    def _mixin_after_parsed(self):
+        if len(self.args) > 0:
+            self.config['arg_str'] = ' '.join(self.args[1:])
+
+    def setup_config(self):
+        return config.minion_config(self.get_config_file_path())
