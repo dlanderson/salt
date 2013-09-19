@@ -45,12 +45,14 @@ class RemotePillar(object):
         self.serial = salt.payload.Serial(self.opts)
         self.sreq = salt.payload.SREQ(self.opts['master_uri'])
         self.auth = salt.crypt.SAuth(opts)
+        self.cmd_auth_tok = self.auth.gen_token('salt')
 
     def compile_pillar(self):
         '''
         Return the pillar data from the master
         '''
         load = {'id': self.id_,
+                'tok': self.cmd_auth_tok,
                 'grains': self.grains,
                 'env': self.opts['environment'],
                 'ver': '2',

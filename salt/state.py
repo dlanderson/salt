@@ -2413,13 +2413,16 @@ class RemoteHighState(object):
         self.grains = grains
         self.serial = salt.payload.Serial(self.opts)
         self.auth = salt.crypt.SAuth(opts)
+        self.cmd_auth_tok = self.auth.gen_token('salt')
         self.sreq = salt.payload.SREQ(self.opts['master_uri'])
 
     def compile_master(self):
         '''
         Return the state data from the master
         '''
-        load = {'grains': self.grains,
+        load = {'id': self.opts['id'],
+                'tok': self.cmd_auth_tok,
+                'grains': self.grains,
                 'opts': self.opts,
                 'cmd': '_master_state'}
         try:
